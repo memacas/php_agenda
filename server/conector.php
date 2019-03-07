@@ -120,6 +120,20 @@
       return $retorno;
     }
 
+    function consultaUltimoID($cUidParam = array()){
+      $retorno = "";
+      if (isset($cUidParam['paramConsulta'])){
+        if (isset($cUidParam['paramConsulta']['tablas']) &&
+            isset($cUidParam['paramConsulta']['campos'])){
+          $tmpData = $this->consultar($cUidParam['paramConsulta']['tablas'],
+                                      $cUidParam['paramConsulta']['campos']);
+
+          if ($tmpData->num_rows > 0) $retorno = mysqli_fetch_all($tmpData)[0][0];
+        }
+      }
+      return $retorno;
+    }
+
     function consultar($tablas, $campos, $condicion = ""){
       $sql = "SELECT ";
       $array_keys = array_keys($campos);

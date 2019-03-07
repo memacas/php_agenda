@@ -20,10 +20,12 @@
 
     //Crear usuarios si la tabla es vacia
     if ($eventos['numRows'] > 0){
-      foreach($eventos as $evento){
-
+      foreach($eventos['data'] as $k => $evento){
+        $eventos['data'][$k]['start'] = $eventos['data'][$k]['start_date'] . ' ' . $eventos['data'][$k]['start_hour'];
+        $eventos['data'][$k]['end'] = $eventos['data'][$k]['end_date'] . ' ' . $eventos['data'][$k]['end_hour'];
+        $eventos['data'][$k]['title'] = $eventos['data'][$k]['titulo'];
       }
-
+      $retorno['eventos'] = $eventos['data'];
     }
   }
 

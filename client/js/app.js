@@ -18,6 +18,7 @@ class EventsManager {
           type: 'GET',
           success: (data) =>{
             if (data.msg=="OK") {
+              console.log(data);
               this.poblarCalendario(data.eventos)
             }else {
               alert(data.msg)
@@ -36,7 +37,7 @@ class EventsManager {
         var yyyy = d.getFullYear().toString();
         var mm = (d.getMonth()+1).toString();
         var dd  = d.getDate().toString();
-        var strDate = yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); 
+        var strDate = yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
 
         $('.calendario').fullCalendar({
             header: {
@@ -100,19 +101,21 @@ class EventsManager {
         type: 'POST',
         success: (data) =>{
           if (data.msg=="OK") {
-            alert('Se ha añadido el evento exitosamente')
+            alert('Se ha añadido el evento exitosamente ' + data.id)
             if (document.getElementById('allDay').checked) {
               $('.calendario').fullCalendar('renderEvent', {
                 title: $('#titulo').val(),
                 start: $('#start_date').val(),
-                allDay: true
+                allDay: true,
+                id: data.id
               })
             }else {
               $('.calendario').fullCalendar('renderEvent', {
                 title: $('#titulo').val(),
                 start: $('#start_date').val()+" "+$('#start_hour').val(),
                 allDay: false,
-                end: $('#end_date').val()+" "+$('#end_hour').val()
+                end: $('#end_date').val()+" "+$('#end_hour').val(),
+                id: data.id
               })
             }
 
@@ -134,6 +137,7 @@ class EventsManager {
     eliminarEvento(event, jsEvent){
 
       var form_data = new FormData()
+      alert(event.id)
       form_data.append('id', event.id)
       $.ajax({
         url: '../server/delete_event.php',
