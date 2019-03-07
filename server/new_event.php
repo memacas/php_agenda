@@ -16,7 +16,7 @@
       $evento['titulo'] ='"' . $_POST['titulo'] . '"';
       $evento['start_date'] = '"' . $_POST['start_date'] . '"';
       $evento['start_hour'] = ($_POST['start_hour'] == "")?'NULL': '"' . $_POST['start_hour'] . '"';
-      $evento['end_date'] = ($_POST['end_date'] == "")?'NULL': '"' . $_POST['end_date'] . ':00"';
+      $evento['end_date'] = ($_POST['end_date'] == "")?'NULL': '"' . $_POST['end_date'] . '"';
       $evento['end_hour'] = ($_POST['end_hour'] == "")?'NULL': '"' . $_POST['end_hour'] . ':00"';
 
       //Si no hay fecha end, NULL la hora
@@ -36,6 +36,7 @@
         $evento['start_hour'] = 'NULL';
         $evento['end_hour'] = 'NULL';
       }
+
       $evento['id_usuario'] = $_SESSION['id_usuario'];
 
       $baseDatos->insertData('eventos', $evento);

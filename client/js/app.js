@@ -18,7 +18,6 @@ class EventsManager {
           type: 'GET',
           success: (data) =>{
             if (data.msg=="OK") {
-              console.log(data);
               this.poblarCalendario(data.eventos)
             }else {
               alert(data.msg)
@@ -137,7 +136,6 @@ class EventsManager {
     eliminarEvento(event, jsEvent){
 
       var form_data = new FormData()
-      alert(event.id)
       form_data.append('id', event.id)
       $.ajax({
         url: '../server/delete_event.php',
@@ -154,7 +152,7 @@ class EventsManager {
             alert(data.msg)
           }
         },
-        error: function(){
+        error: function(err){
           alert("error en la comunicación con el servidor");
         }
       })
@@ -180,10 +178,11 @@ class EventsManager {
 
         form_data.append('id', id)
         form_data.append('start_date', start_date)
-        form_data.append('end_date', end_date)
         form_data.append('start_hour', start_hour)
-        form_data.append('end_hour', end_hour)
-
+        if (evento.end != null){
+          form_data.append('end_date', end_date)
+          form_data.append('end_hour', end_hour)
+        }
         $.ajax({
           url: '../server/update_event.php',
           dataType: "json",
@@ -199,7 +198,8 @@ class EventsManager {
               alert(data.msg)
             }
           },
-          error: function(){
+          error: function(err){
+            console.log(err);
             alert("error en la comunicación con el servidor");
           }
         })
