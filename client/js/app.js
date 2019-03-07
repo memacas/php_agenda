@@ -32,13 +32,19 @@ class EventsManager {
     }
 
     poblarCalendario(eventos) {
+        var d = new Date();
+        var yyyy = d.getFullYear().toString();
+        var mm = (d.getMonth()+1).toString();
+        var dd  = d.getDate().toString();
+        var strDate = yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); 
+
         $('.calendario').fullCalendar({
             header: {
         		left: 'prev,next today',
         		center: 'title',
         		right: 'month,agendaWeek,basicDay'
         	},
-        	defaultDate: '2016-11-01',
+        	defaultDate: strDate,
         	navLinks: true,
         	editable: true,
         	eventLimit: true,
@@ -117,7 +123,8 @@ class EventsManager {
             alert(data.msg)
           }
         },
-        error: function(){
+        error: function(err){
+          console.log(`err`, err.responseText);
           alert("error en la comunicación con el servidor");
         }
       })

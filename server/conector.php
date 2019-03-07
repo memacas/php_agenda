@@ -112,6 +112,7 @@
           $tmpData = $this->consultar($ctaParam['paramConsulta']['tablas'],
                                       $ctaParam['paramConsulta']['campos'],
                                       $condicion);
+
           $retorno['numRows'] = $tmpData->num_rows;
           if ($retorno['numRows'] > 0) $retorno['data'] = mysqli_fetch_all($tmpData, MYSQLI_ASSOC);
         }

@@ -9,15 +9,25 @@
   $baseDatos = new ConectorBD('localhost', 'root', '');
   $baseDatos->initConexion('agenda');
 
-  print_r($_SESSION);
+  if (isset($_SESSION['id_usuario'])){
+    $retorno = array('msg' => 'OK');
+    //Consultar eventos del usuario de la sesion
+    $eventos =  $baseDatos->consultaToArray(array('paramConsulta' => array('tablas' => array('eventos'),
+                                                                            'campos' => array( '*'),
+                                                                            'condicion' => $_SESSION['id_usuario'] . '= id_usuario')));
 
-  //Consultar cuantos usuarios existen
-  $usuarios =  $baseDatos->consultaToArray(array('paramConsulta' => array('tablas' => array('usuarios'), 'campos' => array('EMAIL'))));
 
-  //Crear usuarios si la tabla es vacia
-  if ($usuarios['numRows'] == 0){
-    $usuarios = array();
 
+    //Crear usuarios si la tabla es vacia
+    if ($eventos['numRows'] > 0){
+      foreach($eventos as $evento){
+
+      }
+
+    }
   }
 
+  $baseDatos->cerrarConexion();
+
+  echo json_encode($retorno);
 ?>
